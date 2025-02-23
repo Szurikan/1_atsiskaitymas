@@ -1,2 +1,2 @@
-def reservation_count(movie):
-    return movie.reservations
+# def reservation_count(movie):
+#     return len(movie.reservations)

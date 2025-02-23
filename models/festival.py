@@ -1,7 +1,7 @@
 import datetime
 from models.film import Movie
 from services.data_handler import save_movie_list
-from services.reservation_count import reservation_count
+from models.reservations import Reservation
 
 class Festival:
     def __init__(self):
@@ -239,7 +239,7 @@ class Festival:
             except ValueError:
                 print("Netinkamas laiko formatas. Naudokite YYYY-MM-DD HH:MM.")
 
-    def show_sessions(self):
+    def show_sessions(self, username):
         sessions_found = False
         for i, movie in enumerate(self.movie_dict.values(), start=1):
             if movie.session_time:
@@ -251,9 +251,9 @@ class Festival:
 
         book_or_not = input("\nJeigu norite rezervuoti bilietą, įveskite filmo pavadinimą. Jei ne, spauskite Enter: ").strip()
         if book_or_not:
-            self.book_ticket(book_or_not)
+            self.book_ticket(book_or_not, username)
 
-    def book_ticket(self, movie_name):
+    def book_ticket(self, movie_name, username):
         movie = self.movie_dict.get(movie_name)
         if not movie:
             print("Tokio filmo nerasta.")
@@ -261,6 +261,7 @@ class Festival:
         if not movie.session_time:
             print("Šiam filmui seansas dar nenustatytas.")
             return
+        
         
         while True:
             try:
@@ -271,11 +272,12 @@ class Festival:
                 if ticket_count < 0:
                     print("Bilietų kiekis turi būti teigiamas skaičius.")
                     continue
-                if movie.tickets >= ticket_count:
-                    movie.tickets -= ticket_count
-                    movie.reservations += ticket_count
+
+                reservation = Reservation(username, movie_name, ticket_count)
+
+                if movie.add_reservation(reservation):
                     save_movie_list(self.movie_dict)
-                    print(f"Sėkmingai rezervuoti {ticket_count} bilietai!")
+                    print(f"Jūs rezervavote {ticket_count} bilietų")
                     break
                 else:
                     print(f"Nepakanka bilietų. Liko tik {movie.tickets} bilietai.")
@@ -308,15 +310,17 @@ class Festival:
                 print("Neteisingas reitingo formatas.")
 
 
-    
+    def get_movie_reservation_count(self, movie):
+        return movie.reservation_count()
+
     def show_most_popular_movies(self):
         if not self.movie_dict:
             print("Filmų nėra.")
             return
         
-        movie_ranking = sorted(self.movie_dict.values(), key=reservation_count, reverse=True)
+        movie_ranking = sorted(self.movie_dict.values(), key=self.get_movie_reservation_count, reverse=True)
 
         print("Populiariausi filmai:")
         for i, movie in enumerate(movie_ranking, start=1):
-            print(f"{i}. {movie.name} - {movie.reservations} rezervacijų.")
+            print(f"{i}. {movie.name} - {movie.reservation_count()} rezervacijų.")
 

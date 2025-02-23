@@ -16,6 +16,8 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
     else:
         show_menu_user(festival, username)
 
+    return username
+
 def show_menu_org(festival): # cia yra organizatoriaus meniu
     while True:
         print(Fore.YELLOW +
@@ -74,7 +76,7 @@ def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
         elif choice == "3":
             festival.search_movie()
         elif choice == "4":
-            festival.show_sessions()
+            festival.show_sessions(username)
         elif choice == "5":
             festival.rank_movie()
         elif choice == "6":
