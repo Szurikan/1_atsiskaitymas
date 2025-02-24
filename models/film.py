@@ -15,6 +15,7 @@ class Movie:
         self.ticket_price = ticket_price
         self.reservations = []
         self.ranking_users = []
+        self.ranking_comment = []
 
     def add_reservation(self,reservation):
         if self.tickets >= reservation.ticket_count:
@@ -40,7 +41,7 @@ class Movie:
             f"Amžiaus cenzas: {self.age_rating}\n"
             f"Įvertinimų skaičius: {self.user_ranking_count}\n"
             f"Bendras reitingas: {self.ranking:.1f}\n"
-        )
+            f"Komentarai: {', '.join(self.ranking_comment)}\n")
 
     def __repr__(self):
         return f"{self.name} ({self.year})"

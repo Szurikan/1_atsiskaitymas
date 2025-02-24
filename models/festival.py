@@ -316,13 +316,16 @@ class Festival:
                     movie.user_ranking_count += 1
                     movie.ranking = movie.ranking_points / movie.user_ranking_count
                     movie.ranking_users.append(username)
-                    save_movie_list(self.movie_dict)
-                    print("Ačiū, Jūsų reitingas išsaugotas.")
-                    break
                 else:
                     print("Reitingas turi būti tarp 1 ir 10.")
             except ValueError:
                 print("Neteisingas reitingo formatas.")
+
+            comment = input("Įrašykite komentarą: ")
+            movie.ranking_comment.append(comment)
+            save_movie_list(self.movie_dict)
+            print("Ačiū, Jūsų reitingas išsaugotas.")
+            break
 
 
     def get_movie_reservation_count(self, movie):
