@@ -1,6 +1,8 @@
 from services.data_handler import save_movie_list, load_movie_list
 from models.festival import Festival
 from models.reservations import Reservation
+from services.film_service import add_movie, show_movies, show_movies_extended, delete_movie, update_movie,search_movie, rank_movie, show_most_popular_movies
+from services.reservations_service import add_session_time, show_sessions, show_reservations, show_income
 import colorama
 from colorama import Fore, Back, Style
 
@@ -45,25 +47,25 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
         )
         choice = input("Įveskite veiksmo numerį: ").strip()
         if choice == "1":
-            festival.add_movie()
+            add_movie(festival)
         elif choice == "2":
-            festival.show_movies()
+            show_movies(festival)
         elif choice == "3":
-            festival.delete_movie()
+            delete_movie(festival)
         elif choice == "4":
-            festival.update_movie()
+            update_movie(festival)
         elif choice == "5":
-            festival.show_movies_extended()
+            show_movies_extended(festival)
         elif choice == "6":
-            festival.search_movie()
+            search_movie(festival)
         elif choice == "7":
-            festival.add_session_time()
+            add_session_time(festival)
         elif choice == "8":
-            festival.show_most_popular_movies()
+            show_most_popular_movies(festival)
         elif choice == "9":
-            festival.show_reservations()
+            show_reservations(festival)
         elif choice == "10":
-            festival.show_income()
+            show_income(festival)
         elif choice == "11":
             break
         else:
@@ -85,17 +87,17 @@ def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
         )
         choice = input("Įveskite veiksmo numerį: ").strip()
         if choice == "1":
-            festival.show_movies()
+            show_movies(festival)
         elif choice == "2":
-            festival.show_movies_extended()
+            show_movies_extended(festival)
         elif choice == "3":
-            festival.search_movie()
+            search_movie(festival)
         elif choice == "4":
-            festival.show_sessions(username)
+            show_sessions(festival, username)
         elif choice == "5":
-            festival.rank_movie(username)
+            rank_movie(festival, username)
         elif choice == "6":
-            festival.show_most_popular_movies()
+            show_most_popular_movies(festival)
         elif choice == "7":
             break
         else:
