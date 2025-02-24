@@ -100,7 +100,7 @@ class Festival:
             print("Toks filmas nerastas!")
             return
 
-        print("\nRedaguojate:")
+        print("Redaguojate:")
         print(movie)
         print("1. Pakeisti pavadinimą\n2. Pakeisti trukmę\n3. Pakeisti žanrą\n"
               "4. Pakeisti režisierių\n5. Pakeisti metus\n6. Pakeisti amžiaus reitingą")
@@ -243,10 +243,10 @@ class Festival:
         sessions_found = False
         for i, movie in enumerate(self.movie_dict.values(), start=1):
             if movie.session_time:
-                print(f"{i}. {movie.name} - {movie.session_time.strftime('%Y-%m-%d %H:%M')} | Liko bilietų: {movie.tickets}")
+                print(f"{i}. {movie.name} - {movie.session_time.strftime('%Y-%m-%d %H:%M')} - Liko bilietų: {movie.tickets}")
                 sessions_found = True
         if not sessions_found:
-            print("Nėra numatytų seansų.")
+            print("Seansų nėra.")
             return
 
         book_or_not = input("\nJeigu norite rezervuoti bilietą, įveskite filmo pavadinimą. Jei ne, spauskite Enter: ").strip()
@@ -296,7 +296,7 @@ class Festival:
 
         while True:
             try:
-                user_ranking = int(input("Įrašykite reitingą (1–10): "))
+                user_ranking = int(input("Įrašykite reitingą (1-10): "))
                 if 1 <= user_ranking <= 10:
                     movie.ranking_points += user_ranking
                     movie.user_ranking_count += 1
@@ -323,4 +323,14 @@ class Festival:
         print("Populiariausi filmai:")
         for i, movie in enumerate(movie_ranking, start=1):
             print(f"{i}. {movie.name} - {movie.reservation_count()} rezervacijų.")
+
+    def show_reservations(self):
+        if not self.movie_dict:
+            print("Nėra filmų.")
+            return
+
+        for movie in self.movie_dict.values():
+            if movie.reservations:
+                for i, reservation in enumerate(movie.reservations, start=1):
+                    print(f"{i}. {reservation}")
 

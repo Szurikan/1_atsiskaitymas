@@ -30,7 +30,8 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
             "6. Filmų paieška\n"
             "7. Pridėti seanso laiką\n"
             "8. Rodyti populiariausius festivalio filmus\n"
-            "9. Uždaryti programą\n"+ Style.RESET_ALL
+            "9. Rodyti rezervacijų sąrašą\n"
+            "10. Uždaryti programą\n"+ Style.RESET_ALL
         )
         choice = input("Įveskite veiksmo numerį: ").strip()
         if choice == "1":
@@ -50,6 +51,8 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
         elif choice == "8":
             festival.show_most_popular_movies()
         elif choice == "9":
+            festival.show_reservations()
+        elif choice == "10":
             break
         else:
             print("Neteisingas pasirinkimas.")
