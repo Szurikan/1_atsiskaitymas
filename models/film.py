@@ -1,5 +1,5 @@
 class Movie:
-    def __init__(self,name,duration,genre,director,year,age_rating="",session_time=None,tickets=10,ranking_points=0,user_ranking_count=0,ranking=0
+    def __init__(self,name,duration,genre,director,year,age_rating="",session_time=None,tickets=10,ranking_points=0,user_ranking_count=0,ranking=0, ticket_price=None
     ):
         self.name = name
         self.duration = duration
@@ -12,6 +12,7 @@ class Movie:
         self.ranking_points = ranking_points
         self.user_ranking_count = user_ranking_count
         self.ranking = ranking
+        self.ticket_price = ticket_price
         self.reservations = []
 
     def add_reservation(self,reservation):

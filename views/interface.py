@@ -1,5 +1,6 @@
 from services.data_handler import save_movie_list, load_movie_list
 from models.festival import Festival
+from models.reservations import Reservation
 import colorama
 from colorama import Fore, Back, Style
 
@@ -31,7 +32,8 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
             "7. Pridėti seanso laiką\n"
             "8. Rodyti populiariausius festivalio filmus\n"
             "9. Rodyti rezervacijų sąrašą\n"
-            "10. Uždaryti programą\n"+ Style.RESET_ALL
+            "10. Rodyti uždirbtas pajamas\n"
+            "11. Uždaryti programą\n"+ Style.RESET_ALL
         )
         choice = input("Įveskite veiksmo numerį: ").strip()
         if choice == "1":
@@ -53,6 +55,8 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
         elif choice == "9":
             festival.show_reservations()
         elif choice == "10":
+            festival.show_income()
+        elif choice == "11":
             break
         else:
             print("Neteisingas pasirinkimas.")

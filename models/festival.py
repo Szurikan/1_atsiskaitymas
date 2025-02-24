@@ -231,19 +231,28 @@ class Festival:
                     print("Šis seanso laikas užimtas. Bandykite kitą laiką.")
                     continue
 
-                found_movie.session_time = session_time
-                save_movie_list(self.movie_dict)
-                print(f"Pridėtas seanso laikas: {session_time.strftime('%Y-%m-%d %H:%M')}")
-                break
-
             except ValueError:
                 print("Netinkamas laiko formatas. Naudokite YYYY-MM-DD HH:MM.")
+
+            try:
+                ticket_price = float(input("Įvestkite bilieto kaina Eurais: "))
+                if ticket_price < 0:
+                    print("Kaina negali būti mažesnė už 0.")
+
+                found_movie.session_time = session_time
+                found_movie.ticket_price = ticket_price
+                save_movie_list(self.movie_dict)
+                print(f"Pridėtas seanso laikas: {session_time.strftime('%Y-%m-%d %H:%M')}. Bilieto kaina: {ticket_price} EUR.")
+                break
+            
+            except ValueError:
+                print("Netinkamas formatas.")
 
     def show_sessions(self, username):
         sessions_found = False
         for i, movie in enumerate(self.movie_dict.values(), start=1):
             if movie.session_time:
-                print(f"{i}. {movie.name} - {movie.session_time.strftime('%Y-%m-%d %H:%M')} - Liko bilietų: {movie.tickets}")
+                print(f"{i}. {movie.name} - {movie.session_time.strftime('%Y-%m-%d %H:%M')} - Liko bilietų: {movie.tickets} - Bilieto kaina {movie.ticket_price} EUR")
                 sessions_found = True
         if not sessions_found:
             print("Seansų nėra.")
@@ -265,19 +274,20 @@ class Festival:
         
         while True:
             try:
-                ticket_count = int(input("Įveskite norimą bilietų kiekį (arba 0, jei norite išeiti): "))
+                ticket_count = int(input(f"Vieno bilieto kaina - {movie.ticket_price} EUR. Įveskite norimą bilietų kiekį (arba 0, jei norite išeiti): "))
                 if ticket_count == 0:
                     print("Bilietų rezervacija atšaukta.")
                     return
                 if ticket_count < 0:
                     print("Bilietų kiekis turi būti teigiamas skaičius.")
                     continue
+                total_price = ticket_count * movie.ticket_price
 
-                reservation = Reservation(username, movie_name, ticket_count)
+                reservation = Reservation(username, movie_name, ticket_count, total_price)
 
                 if movie.add_reservation(reservation):
                     save_movie_list(self.movie_dict)
-                    print(f"Jūs rezervavote {ticket_count} bilietų")
+                    print(f"Jūs rezervavote {ticket_count} bilietų. Atsiėmimo metu turėsite sumoketi {total_price} EUR.")
                     break
                 else:
                     print(f"Nepakanka bilietų. Liko tik {movie.tickets} bilietai.")
@@ -334,3 +344,9 @@ class Festival:
                 for i, reservation in enumerate(movie.reservations, start=1):
                     print(f"{i}. {reservation}")
 
+    def show_income(self):
+        income_amount = 0
+        for movie in self.movie_dict.values():
+            for reservation in movie.reservations:
+                income_amount += reservation.total_price
+        print(f"Jūsų uždirbtos pajamos: {income_amount} EUR")
