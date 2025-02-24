@@ -285,7 +285,9 @@ class Festival:
 
                 reservation = Reservation(username, movie_name, ticket_count, total_price)
 
-                if movie.add_reservation(reservation):
+                if movie.tickets >= reservation.ticket_count:
+                    movie.tickets -= reservation.ticket_count
+                    movie.reservations.append(reservation)
                     save_movie_list(self.movie_dict)
                     print(f"Jūs rezervavote {ticket_count} bilietų. Atsiėmimo metu turėsite sumoketi {total_price} EUR.")
                     break
@@ -329,7 +331,10 @@ class Festival:
 
 
     def get_movie_reservation_count(self, movie):
-        return movie.reservation_count()
+        reservations = 0
+        for reservation in movie.reservations:
+            reservations += reservation.ticket_count
+        return reservations
 
     def show_most_popular_movies(self):
         if not self.movie_dict:
@@ -340,7 +345,7 @@ class Festival:
 
         print("Populiariausi filmai:")
         for i, movie in enumerate(movie_ranking, start=1):
-            print(f"{i}. {movie.name} - {movie.reservation_count()} rezervacijų.")
+            print(f"{i}. {movie.name} - {self.get_movie_reservation_count(movie)} rezervacijų.")
 
     def show_reservations(self):
         if not self.movie_dict:

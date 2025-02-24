@@ -17,19 +17,6 @@ class Movie:
         self.ranking_users = []
         self.ranking_comment = []
 
-    def add_reservation(self,reservation):
-        if self.tickets >= reservation.ticket_count:
-            self.tickets -= reservation.ticket_count
-            self.reservations.append(reservation)
-            return True
-        return False
-    
-    def reservation_count(self):
-        reservations = 0
-        for reservation in self.reservations:
-            reservations += reservation.ticket_count
-        return reservations
-
 
     def __str__(self):
         return (
