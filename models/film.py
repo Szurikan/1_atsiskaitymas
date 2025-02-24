@@ -14,6 +14,7 @@ class Movie:
         self.ranking = ranking
         self.ticket_price = ticket_price
         self.reservations = []
+        self.ranking_users = []
 
     def add_reservation(self,reservation):
         if self.tickets >= reservation.ticket_count:

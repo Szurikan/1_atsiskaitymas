@@ -295,13 +295,17 @@ class Festival:
                 print("Įvedėte bilietų kiekį neteisingu formatu. Bandykite dar kartą.")
 
 
-    def rank_movie(self):
+    def rank_movie(self, username):
         self.show_movies()
         to_rank = input("Įrašykite filmo pavadinimą, kuriam norite suteikti reitingą: ").strip()
         movie = self.movie_dict.get(to_rank)
 
         if not movie:
             print("Filmas nerastas.")
+            return
+        
+        if username in movie.ranking_users:
+            print("Jūs jau reitingavote šį filmą.")
             return
 
         while True:
@@ -311,6 +315,7 @@ class Festival:
                     movie.ranking_points += user_ranking
                     movie.user_ranking_count += 1
                     movie.ranking = movie.ranking_points / movie.user_ranking_count
+                    movie.ranking_users.append(username)
                     save_movie_list(self.movie_dict)
                     print("Ačiū, Jūsų reitingas išsaugotas.")
                     break

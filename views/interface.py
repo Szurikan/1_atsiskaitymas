@@ -85,7 +85,7 @@ def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
         elif choice == "4":
             festival.show_sessions(username)
         elif choice == "5":
-            festival.rank_movie()
+            festival.rank_movie(username)
         elif choice == "6":
             festival.show_most_popular_movies()
         elif choice == "7":
