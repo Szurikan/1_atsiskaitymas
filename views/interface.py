@@ -11,11 +11,19 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
     festival.movie_dict = load_movie_list()
 
     print(Fore.RED + Back.BLUE +'Sveiki atvykę į festivalį! Jeigu esate organizatorius, rašykite "org".' + Style.RESET_ALL)
-    username = input(Fore.CYAN +  "Įrašykite vartotojo vardą: " + Style.RESET_ALL).strip()
-    if username == "org":
-        show_menu_org(festival)
-    else:
-        show_menu_user(festival, username)
+    
+    while True:
+        username = input(Fore.CYAN +  "Įrašykite vartotojo vardą: " + Style.RESET_ALL).strip()
+        if username == "org":
+            password = input("Įveskite slaptažodį: ")
+            if password == "org":
+                show_menu_org(festival)
+                break
+            else:
+                print("Įvedėte neteisingą slaptažodį.")
+        else:
+            show_menu_user(festival, username)
+            break
 
     return username
 
