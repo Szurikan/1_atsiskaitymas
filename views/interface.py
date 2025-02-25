@@ -22,7 +22,7 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
                 show_menu_org(festival)
                 break
             else:
-                print("Įvedėte neteisingą slaptažodį.")
+                print(Fore.RED + "Įvedėte neteisingą slaptažodį." + Style.RESET_ALL)
         else:
             show_menu_user(festival, username)
             break
@@ -67,9 +67,10 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
         elif choice == "10":
             show_income(festival)
         elif choice == "11":
+            print("Ačiū. VIso gero.")
             break
         else:
-            print("Neteisingas pasirinkimas.")
+            print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)
 
 
 def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
@@ -99,6 +100,7 @@ def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
         elif choice == "6":
             show_most_popular_movies(festival)
         elif choice == "7":
+            print("Ačiū. VIso gero.")
             break
         else:
-            print("Neteisingas pasirinkimas.")
+            print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)

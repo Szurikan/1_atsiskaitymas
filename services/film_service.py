@@ -2,16 +2,17 @@ from models.film import Movie
 from models.festival import Festival
 from models.reservations import Reservation
 from services.data_handler import save_movie_list
+from colorama import Fore, Back, Style
 
 def add_movie(festival):
 
     while True:
         name = input("Įrašykite filmo pavadinimą: ").strip()
         if not name:
-            print("Filmo pavadinimas negali būti tuščias. Bandykite dar kartą")
+            print(Fore.RED + "Filmo pavadinimas negali būti tuščias. Bandykite dar kartą" + Style.RESET_ALL)
             continue
         if name in festival.movie_dict:
-            print("Filmas tokiu pavadinimu jau egzistuoja.")
+            print(Fore.RED + "Filmas tokiu pavadinimu jau egzistuoja." + Style.RESET_ALL)
             continue
         break
 
@@ -19,11 +20,11 @@ def add_movie(festival):
         try:
             duration = int(input("Įrašykite filmo trukmę (minutėmis): "))
             if duration <= 0:
-                print("Įrašykite teisingą filmo trukmę")
+                print(Fore.RED + "Įrašykite teisingą filmo trukmę" + Style.RESET_ALL)
                 continue
             break
         except ValueError:
-            print("Įvedėtė neteisingą formatą. Veskite dar kartą")
+            print(Fore.RED + "Įvedėtė neteisingą formatą. Veskite dar kartą" + Style.RESET_ALL)
             continue
 
     genre = input("Įrašykite filmo žanrą: ").strip()
@@ -31,7 +32,7 @@ def add_movie(festival):
     while True:
         director = input("Įrašykite filmo režisierių: ").strip()
         if not director:
-            print("Privalote įvestį filmo režisierių")
+            print(Fore.RED + "Privalote įvestį filmo režisierių" + Style.RESET_ALL)
             continue
         break
 
@@ -39,11 +40,11 @@ def add_movie(festival):
         try:
             year = int(input("Įrašykite filmo sukūrimo metus: "))
             if year < 1900 or year > 2025:
-                print("Neteisingi metai. Veskite dar kartą")
+                print(Fore.RED + "Neteisingi metai. Veskite dar kartą" + Style.RESET_ALL)
                 continue
             break
         except ValueError:
-            print("Įvedėtė neteisingą formatą. Veskite dar kartą")
+            print(Fore.RED + "Įvedėtė neteisingą formatą. Veskite dar kartą" + Style.RESET_ALL)
             continue
 
     age_rating = input("Įrašykite filmo amžiaus reitingą (jeigu yra): ").strip()
@@ -55,7 +56,7 @@ def add_movie(festival):
 
 def show_movies(festival):
     if not festival.movie_dict:
-        print("Filmų sąrašas tuščias.")
+        print(Fore.RED + "Filmų sąrašas tuščias." + Style.RESET_ALL)
     else:
         print("\nFilmų sąrašas:")
         for i, movie in enumerate(festival.movie_dict.values(), start=1):
@@ -63,7 +64,7 @@ def show_movies(festival):
 
 def show_movies_extended(festival):
     if not festival.movie_dict:
-        print("Filmų sąrašas tuščias.")
+        print(Fore.RED + "Filmų sąrašas tuščias." + Style.RESET_ALL)
     else:
         print("\nDetali filmų peržiūra:")
         for i, movie in enumerate(festival.movie_dict.values(), start=1):
@@ -71,7 +72,7 @@ def show_movies_extended(festival):
 
 def delete_movie(festival):
     if not festival.movie_dict:
-        print("Nėra filmų, kuriuos būtų galima pašalinti.")
+        print(Fore.RED + "Nėra filmų, kuriuos būtų galima pašalinti." + Style.RESET_ALL)
         return
 
     show_movies(festival)
@@ -80,11 +81,11 @@ def delete_movie(festival):
         save_movie_list(festival.movie_dict)
         print(f"Filmas '{movie_to_delete}' pašalintas.")
     else:
-        print("Filmas neegzistuoja.")
+        print(Fore.RED + "Filmas neegzistuoja." + Style.RESET_ALL)
 
 def update_movie(festival):
     if not festival.movie_dict:
-        print("Nėra filmų, kuriuos būtų galima redaguoti.")
+        print(Fore.RED + "Nėra filmų, kuriuos būtų galima redaguoti." + Style.RESET_ALL)
         return
 
     show_movies(festival)
@@ -92,7 +93,7 @@ def update_movie(festival):
     movie = festival.movie_dict.get(movie_to_change)
 
     if not movie:
-        print("Toks filmas nerastas!")
+        print(Fore.RED + "Toks filmas nerastas!" + Style.RESET_ALL)
         return
 
     print("Redaguojate:")
@@ -106,13 +107,13 @@ def update_movie(festival):
         while True:
             new_name = input("Įveskite naują pavadinimą: ").strip()
             if not new_name:
-                print("Pavadinimas negali būtu tuščias.")
+                print(Fore.RED + "Pavadinimas negali būtu tuščias." + Style.RESET_ALL)
                 continue
             if new_name in festival.movie_dict:
-                print("Pavadinimas jau egzistuoja")
+                print(Fore.RED + "Pavadinimas jau egzistuoja" + Style.RESET_ALL)
                 continue
             if new_name == movie_to_change:
-                print("Pavadinimas negali būti toks pats kaip ir senasis.")
+                print(Fore.RED + "Pavadinimas negali būti toks pats kaip ir senasis." + Style.RESET_ALL)
                 continue
             festival.movie_dict[new_name] = festival.movie_dict.pop(movie_to_change)
             festival.movie_dict[new_name].name = new_name
@@ -123,13 +124,13 @@ def update_movie(festival):
             try:
                 new_duration = int(input("Įveskite naują trukmę (minutėmis): "))
                 if new_duration < 1:
-                    print("Mažiausia filmo trukmė yra 1 minutė")
+                    print(Fore.RED + "Mažiausia filmo trukmė yra 1 minutė" + Style.RESET_ALL)
                     continue
                 else:
                     new_duration = movie.duration
                     break
             except ValueError:
-                print("Neteisingas skaičių formatas.")
+                print(Fore.RED + "Neteisingas skaičių formatas." + Style.RESET_ALL)
                 continue
 
     elif choice == "3":
@@ -142,10 +143,10 @@ def update_movie(festival):
                 movie.director = new_director
                 break
             elif new_director == movie.director:
-                print("Režisierius jau turi tokį vardą.")
+                print(Fore.RED + "Režisierius jau turi tokį vardą." + Style.RESET_ALL)
                 break
             else:
-                print("Privalote įvesti režisierių")
+                print(Fore.RED + "Privalote įvesti režisierių" + Style.RESET_ALL)
                 continue
 
 
@@ -154,19 +155,19 @@ def update_movie(festival):
             try:
                 new_year = int(input("Įveskite naujus metus: "))
                 if new_year < 1900 or new_year > 2025:
-                    print("Ivesti neteisingi metai.")
+                    print(Fore.RED + "Ivesti neteisingi metai." + Style.RESET_ALL)
                     continue
                 else:
                     new_year = movie.year
                     break
             except ValueError:
-                print("Neteisingas skaičių formatas.")
+                print(Fore.RED + "Neteisingas skaičių formatas." + Style.RESET_ALL)
                 continue
     
     elif choice == "6":
         movie.age_rating = input("Įveskite naują amžiaus reitingą: ").strip()
     else:
-        print("Neteisingas pasirinkimas.")
+        print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)
         return
 
     save_movie_list(festival.movie_dict)
@@ -174,7 +175,7 @@ def update_movie(festival):
 
 def search_movie(festival):
     if not festival.movie_dict:
-        print("Filmų sąrašas tuščias.")
+        print(Fore.RED + "Filmų sąrašas tuščias." + Style.RESET_ALL)
         return
 
     print("\nPaieška pagal:\n1. Pavadinimą\n2. Režisierių")
@@ -188,7 +189,7 @@ def search_movie(festival):
             for movie in found_movies:
                 print(movie)
         else:
-            print("Filmai nerasti.")
+            print(Fore.RED + "Filmai nerasti." + Style.RESET_ALL)
 
     elif choice == "2":
         director_name = input("Įveskite režisieriaus vardą: ").strip().lower()
@@ -198,9 +199,9 @@ def search_movie(festival):
             for movie in director_movies:
                 print(movie)
         else:
-            print("Toks režisierius festivalyje nedalyvauja.")
+            print(Fore.RED + "Toks režisierius festivalyje nedalyvauja." + Style.RESET_ALL)
     else:
-        print("Neteisingas pasirinkimas.")
+        print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)
 
 def rank_movie(festival, username):
     show_movies(festival)
@@ -208,11 +209,11 @@ def rank_movie(festival, username):
     movie = festival.movie_dict.get(to_rank)
 
     if not movie:
-        print("Filmas nerastas.")
+        print(Fore.RED + "Filmas nerastas." + Style.RESET_ALL)
         return
     
     if username in movie.ranking_users:
-        print("Jūs jau reitingavote šį filmą.")
+        print(Fore.RED + "Jūs jau reitingavote šį filmą." + Style.RESET_ALL)
         return
 
     while True:
@@ -224,9 +225,9 @@ def rank_movie(festival, username):
                 movie.ranking = movie.ranking_points / movie.user_ranking_count
                 movie.ranking_users.append(username)
             else:
-                print("Reitingas turi būti tarp 1 ir 10.")
+                print(Fore.RED + "Reitingas turi būti tarp 1 ir 10." + Style.RESET_ALL)
         except ValueError:
-            print("Neteisingas reitingo formatas.")
+            print(Fore.RED + "Neteisingas reitingo formatas." + Style.RESET_ALL)
 
         comment = input("Įrašykite komentarą: ")
         movie.ranking_comment.append(comment)
@@ -242,7 +243,7 @@ def get_movie_reservation_count(movie):
 
 def show_most_popular_movies(festival):
     if not festival.movie_dict:
-        print("Filmų nėra.")
+        print(Fore.RED + "Filmų nėra." + Style.RESET_ALL)
         return
 
     movie_ranking = sorted(festival.movie_dict.values(), key=get_movie_reservation_count, reverse=True)

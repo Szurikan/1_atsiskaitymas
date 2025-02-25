@@ -4,6 +4,7 @@ from models.reservations import Reservation
 from services.film_service import show_movies
 from services.data_handler import save_movie_list
 import datetime
+from colorama import Fore, Back, Style
 
 def add_session_time(festival):
     show_movies(festival)
@@ -11,10 +12,10 @@ def add_session_time(festival):
     found_movie = festival.movie_dict.get(movie_session)
 
     if not found_movie:
-        print("Tokio filmo nėra.")
+        print(Fore.RED + "Tokio filmo nėra." + Style.RESET_ALL)
         return
     if found_movie.session_time:
-        print(f"Šis filmas jau turi seanso laiką: {found_movie.session_time.strftime('%Y-%m-%d %H:%M')}")
+        print(Fore.RED + f"Šis filmas jau turi seanso laiką: {found_movie.session_time.strftime('%Y-%m-%d %H:%M')}" + Style.RESET_ALL)
         return
 
     while True:
@@ -22,21 +23,21 @@ def add_session_time(festival):
         try:
             session_time = datetime.datetime.strptime(session_time_str, "%Y-%m-%d %H:%M")
             if session_time < datetime.datetime.now():
-                print("Įvestas laikas jau praėjo. Bandykite kitą laiką.")
+                print(Fore.RED + "Įvestas laikas jau praėjo. Bandykite kitą laiką." + Style.RESET_ALL)
                 continue
 
             if any(time.session_time == session_time for time in festival.movie_dict.values()):
-                print("Šis seanso laikas užimtas. Bandykite kitą laiką.")
+                print(Fore.RED + "Šis seanso laikas užimtas. Bandykite kitą laiką." + Style.RESET_ALL)
                 continue
 
         except ValueError:
-            print("Netinkamas laiko formatas. Naudokite YYYY-MM-DD HH:MM.")
+            print(Fore.RED + "Netinkamas laiko formatas. Naudokite YYYY-MM-DD HH:MM." + Style.RESET_ALL)
             continue
 
         try:
             ticket_price = float(input("Įvestkite bilieto kaina Eurais: "))
             if ticket_price < 0:
-                print("Kaina negali būti mažesnė už 0.")
+                print(Fore.RED + "Kaina negali būti mažesnė už 0." + Style.RESET_ALL)
 
             found_movie.session_time = session_time
             found_movie.ticket_price = ticket_price
@@ -45,7 +46,7 @@ def add_session_time(festival):
             break
         
         except ValueError:
-            print("Netinkamas formatas.")
+            print(Fore.RED + "Netinkamas formatas." + Style.RESET_ALL)
 
 def show_sessions(festival, username):
     sessions_found = False
@@ -54,7 +55,7 @@ def show_sessions(festival, username):
             print(f"{i}. {movie.name} - {movie.session_time.strftime('%Y-%m-%d %H:%M')} - Liko bilietų: {movie.tickets} - Bilieto kaina {movie.ticket_price} EUR")
             sessions_found = True
     if not sessions_found:
-        print("Seansų nėra.")
+        print(Fore.RED + "Seansų nėra." + Style.RESET_ALL)
         return
 
     book_or_not = input("\nJeigu norite rezervuoti bilietą, įveskite filmo pavadinimą. Jei ne, spauskite Enter: ").strip()
@@ -64,10 +65,10 @@ def show_sessions(festival, username):
 def book_ticket(movie_name, username, festival):
     movie = festival.movie_dict.get(movie_name)
     if not movie:
-        print("Tokio filmo nerasta.")
+        print(Fore.RED + "Tokio filmo nerasta." + Style.RESET_ALL)
         return
     if not movie.session_time:
-        print("Šiam filmui seansas dar nenustatytas.")
+        print(Fore.RED + "Šiam filmui seansas dar nenustatytas." + Style.RESET_ALL)
         return
     
     
@@ -75,10 +76,10 @@ def book_ticket(movie_name, username, festival):
         try:
             ticket_count = int(input(f"Vieno bilieto kaina - {movie.ticket_price} EUR. Įveskite norimą bilietų kiekį (arba 0, jei norite išeiti): "))
             if ticket_count == 0:
-                print("Bilietų rezervacija atšaukta.")
+                print(Fore.RED + "Bilietų rezervacija atšaukta." + Style.RESET_ALL)
                 return
             if ticket_count < 0:
-                print("Bilietų kiekis turi būti teigiamas skaičius.")
+                print(Fore.RED + "Bilietų kiekis turi būti teigiamas skaičius." + Style.RESET_ALL)
                 continue
             total_price = ticket_count * movie.ticket_price
 
@@ -91,15 +92,15 @@ def book_ticket(movie_name, username, festival):
                 print(f"Jūs rezervavote {ticket_count} bilietų. Atsiėmimo metu turėsite sumoketi {total_price} EUR.")
                 break
             else:
-                print(f"Nepakanka bilietų. Liko tik {movie.tickets} bilietai.")
+                print(Fore.RED + f"Nepakanka bilietų. Liko tik {movie.tickets} bilietai." + Style.RESET_ALL)
         except ValueError:
-            print("Įvedėte bilietų kiekį neteisingu formatu. Bandykite dar kartą.")
+            print(Fore.RED + "Įvedėte bilietų kiekį neteisingu formatu. Bandykite dar kartą." + Style.RESET_ALL)
 
 def show_reservations(festival):
     reservation_count = 0
 
     if not festival.movie_dict:
-        print("Nėra filmų.")
+        print(Fore.RED + "Nėra filmų." + Style.RESET_ALL)
         return
 
     for movie in festival.movie_dict.values():
