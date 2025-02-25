@@ -117,6 +117,10 @@ def update_movie(festival):
                 continue
             festival.movie_dict[new_name] = festival.movie_dict.pop(movie_to_change)
             festival.movie_dict[new_name].name = new_name
+
+            for reservation in festival.movie_dict[new_name].reservations:
+                reservation.movie_name = new_name
+
             break
 
     elif choice == "2":

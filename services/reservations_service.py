@@ -118,4 +118,4 @@ def show_income(festival):
     for movie in festival.movie_dict.values():
         for reservation in movie.reservations:
             income_amount += reservation.total_price
-    print(Fore.GREEN + f"Jūsų uždirbtos pajamos: {income_amount} EUR" + Style.RESET_ALL)
+    print(Fore.GREEN + f"Jūsų pajamos: {income_amount} EUR" + Style.RESET_ALL)

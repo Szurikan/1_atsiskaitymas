@@ -13,7 +13,7 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
     festival = Festival()
     festival.movie_dict = load_movie_list()
 
-    print(Fore.RED + Back.BLUE +'Sveiki atvykę į festivalį! Jeigu esate organizatorius, rašykite "org".' + Style.RESET_ALL)
+    print(Fore.RED + Back.WHITE +'Sveiki atvykę į festivalį! Jeigu esate organizatorius, rašykite "org".' + Style.RESET_ALL)
     
     while True:
         username = input(Fore.CYAN +  "Įrašykite vartotojo vardą: " + Style.RESET_ALL).strip()
