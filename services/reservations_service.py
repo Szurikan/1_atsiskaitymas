@@ -31,6 +31,7 @@ def add_session_time(festival):
 
         except ValueError:
             print("Netinkamas laiko formatas. Naudokite YYYY-MM-DD HH:MM.")
+            continue
 
         try:
             ticket_price = float(input("Įvestkite bilieto kaina Eurais: "))
@@ -95,14 +96,21 @@ def book_ticket(movie_name, username, festival):
             print("Įvedėte bilietų kiekį neteisingu formatu. Bandykite dar kartą.")
 
 def show_reservations(festival):
+    reservation_count = 0
+
     if not festival.movie_dict:
         print("Nėra filmų.")
         return
 
     for movie in festival.movie_dict.values():
         if movie.reservations:
-            for i, reservation in enumerate(movie.reservations, start=1):
-                print(f"{i}. {reservation}")
+            for reservation in movie.reservations:
+                reservation_count += 1
+                print(f"{reservation_count}. {reservation}")
+
+        # if movie.reservations:
+        #     for i, reservation in enumerate(movie.reservations, start={i + 1}):
+        #         print(f"{i}. {reservation}")
 
 def show_income(festival):
     income_amount = 0
