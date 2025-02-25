@@ -5,6 +5,7 @@ from services.film_service import add_movie, show_movies, show_movies_extended, 
 from services.reservations_service import add_session_time, show_sessions, show_reservations, show_income
 import colorama
 from colorama import Fore, Back, Style
+import os
 
 colorama.init() # sitas dalykas kazkodel padaro kad man normaliai rodo spalvas terminale paleidus exe faila, o ne skaicius kazkokius
 
@@ -31,6 +32,7 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
 
 def show_menu_org(festival): # cia yra organizatoriaus meniu
     while True:
+        os.system("cls")
         print(Fore.YELLOW +
             "\nOrganizatoriaus MENIU:\n" +
             Fore.CYAN + "1. Pridėti filmą\n"
@@ -71,11 +73,13 @@ def show_menu_org(festival): # cia yra organizatoriaus meniu
             break
         else:
             print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)
+        input("\nSpauskite Enter, jeigu norite tęsti.")
 
 
 def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
     print(f"\nSveiki, {username}!")
     while True:
+        os.system("cls")
         print(
             Fore.YELLOW + "\nVartotojo MENIU:\n" +
             Fore. CYAN + "1. Parodyti filmų sąrašą\n"
@@ -104,3 +108,4 @@ def show_menu_user(festival, username): # cia yra paprasta vartotojo meniu
             break
         else:
             print(Fore.RED + "Neteisingas pasirinkimas." + Style.RESET_ALL)
+        input("\nSpauskite Enter, jeigu norite tęsti.")
