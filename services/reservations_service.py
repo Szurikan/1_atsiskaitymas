@@ -8,9 +8,12 @@ from colorama import Fore, Back, Style
 
 def add_session_time(festival):
     show_movies(festival)
-    movie_session = input("\nĮveskite kuriam filmui norite pridėti seanso laiką: ").strip()
+    movie_session = input("\nĮveskite kuriam filmui norite pridėti seanso laiką arba '0' jeigu norite grįžti: ").strip()
     found_movie = festival.movie_dict.get(movie_session)
 
+    if movie_session == str(0):
+        print("Seanso pridėjimas atšauktas.")
+        return
     if not found_movie:
         print(Fore.RED + "Tokio filmo nėra." + Style.RESET_ALL)
         return
@@ -42,7 +45,7 @@ def add_session_time(festival):
             found_movie.session_time = session_time
             found_movie.ticket_price = ticket_price
             save_movie_list(festival.movie_dict)
-            print(f"Pridėtas seanso laikas: {session_time.strftime('%Y-%m-%d %H:%M')}. Bilieto kaina: {ticket_price} EUR.")
+            print(Fore.GREEN + f"Pridėtas seanso laikas: {session_time.strftime('%Y-%m-%d %H:%M')}. Bilieto kaina: {ticket_price} EUR." + Style.RESET_ALL)
             break
         
         except ValueError:
@@ -109,13 +112,10 @@ def show_reservations(festival):
                 reservation_count += 1
                 print(f"{reservation_count}. {reservation}")
 
-        # if movie.reservations:
-        #     for i, reservation in enumerate(movie.reservations, start={i + 1}):
-        #         print(f"{i}. {reservation}")
 
 def show_income(festival):
     income_amount = 0
     for movie in festival.movie_dict.values():
         for reservation in movie.reservations:
             income_amount += reservation.total_price
-    print(f"Jūsų uždirbtos pajamos: {income_amount} EUR")
+    print(Fore.GREEN + f"Jūsų uždirbtos pajamos: {income_amount} EUR" + Style.RESET_ALL)

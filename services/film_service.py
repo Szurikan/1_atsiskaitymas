@@ -52,7 +52,7 @@ def add_movie(festival):
     new_movie = Movie(name, duration, genre, director, year, age_rating)
     festival.movie_dict[name] = new_movie
     save_movie_list(festival.movie_dict)
-    print("Filmas pridėtas sėkmingai.")
+    print(Fore.GREEN + "Filmas pridėtas sėkmingai." + Style.RESET_ALL)
 
 def show_movies(festival):
     if not festival.movie_dict:
@@ -171,7 +171,7 @@ def update_movie(festival):
         return
 
     save_movie_list(festival.movie_dict)
-    print(f"Filmas '{movie.name}' paredaguotas sėkmingai.")
+    print(Fore.GREEN + f"Filmas '{movie.name}' paredaguotas sėkmingai." + Style.RESET_ALL)
 
 def search_movie(festival):
     if not festival.movie_dict:
@@ -232,7 +232,7 @@ def rank_movie(festival, username):
         comment = input("Įrašykite komentarą: ")
         movie.ranking_comment.append(comment)
         save_movie_list(festival.movie_dict)
-        print("Ačiū, Jūsų reitingas išsaugotas.")
+        print(Fore.GREEN + "Ačiū, Jūsų reitingas išsaugotas." + Style.RESET_ALL)
         break
 
 def get_movie_reservation_count(movie):

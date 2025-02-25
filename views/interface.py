@@ -18,7 +18,7 @@ def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duom
     while True:
         username = input(Fore.CYAN +  "Įrašykite vartotojo vardą: " + Style.RESET_ALL).strip()
         if username == "org":
-            password = input("Įveskite slaptažodį: ")
+            password = input(Fore.CYAN + "Įveskite slaptažodį: " + Style.RESET_ALL)
             if password == "org":
                 show_menu_org(festival)
                 break
