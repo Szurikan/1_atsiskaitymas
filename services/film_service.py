@@ -197,7 +197,7 @@ def search_movie(festival):
 
     elif choice == "2":
         director_name = input("Įveskite režisieriaus vardą: ").strip().lower()
-        director_movies = [movie for movie in festival.movie_dict.values() if movie.director.lower() == director_name]
+        director_movies = [movie for movie in festival.movie_dict.values() if director_name in movie.director.lower()]
         if director_movies:
             print("Rasti filmai:")
             for movie in director_movies:
