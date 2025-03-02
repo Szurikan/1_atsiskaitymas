@@ -1,1 +1,1 @@
-MOVIE_LIST_PATH = r"D:\\Artificial Intelligence\\1_atsiskaitymas\data\\movie_list.pickle"
+MOVIE_LIST_PATH = r"D:\\Artificial Intelligence\\1_atsiskaitymas\data\\kinofestivalis.db"

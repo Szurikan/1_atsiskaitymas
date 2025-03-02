@@ -1,4 +1,4 @@
-from services.data_handler import save_movie_list, load_movie_list
+from services.data_handler import create_movie_table, load_movie_list
 from models.festival import Festival
 from models.reservations import Reservation
 from services.film_service import add_movie, show_movies, show_movies_extended, delete_movie, update_movie,search_movie, rank_movie, show_most_popular_movies
@@ -10,6 +10,7 @@ import os
 colorama.init() # sitas dalykas kazkodel padaro kad man normaliai rodo spalvas terminale paleidus exe faila, o ne skaicius kazkokius
 
 def start_program(): # paleidzia pirmine programa, kurioje vartotojas iveda duomenis kad galime butu paziureti kas jis toks
+    create_movie_table()
     festival = Festival()
     festival.movie_dict = load_movie_list()
 
